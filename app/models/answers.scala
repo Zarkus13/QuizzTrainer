@@ -4,6 +4,7 @@ import org.squeryl.Table
 import DB._
 import org.squeryl.dsl.ManyToOne
 import org.squeryl.annotations._
+import play.api.libs.json.{Json, JsValue, Writes}
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,6 +22,19 @@ case class Answer(
     def table: Table[Answer] = answers
 
     lazy val question: ManyToOne[Question] = questionToAnswers.right(this)
+
+    def writes(o: Model): JsValue = {
+        Json.obj(
+            "id" -> id,
+            "letter" -> letter,
+            "text" -> text,
+            "questionId" -> questionId
+        )
+    }
+
+    def toJson(): JsValue = {
+        writes(this)
+    }
 }
 
 object Answer extends StaticModel {

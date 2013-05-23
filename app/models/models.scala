@@ -9,8 +9,9 @@ package models
 
 import org.squeryl._
 import org.squeryl.PrimitiveTypeMode._
+import play.api.libs.json.{JsValue, Writes}
 
-trait Model extends KeyedEntity[Long] {
+trait Model extends KeyedEntity[Long] with Writes[Model] {
     type T <: Model
     def table: Table[T]
     val id: Long = 0
@@ -26,6 +27,8 @@ trait Model extends KeyedEntity[Long] {
             table.delete(id)
         }
     }
+
+    def toJson(): JsValue
 }
 
 trait StaticModel {
@@ -52,8 +55,8 @@ trait StaticModel {
 }
 
 object DB extends Schema {
-    val questions = table[Question]("QUESTIONS")
-    val answers = table[Answer]("ANSWERS")
+    val questions = table[Question]("questions")
+    val answers = table[Answer]("answers")
 
     // RELATIONS
     val questionToAnswers = oneToManyRelation(questions, answers)

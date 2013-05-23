@@ -13,4 +13,8 @@ object Application extends ControllerWrapper {
         Ok(views.html.index("Your new application is ready."))
     }
 
+    def discardSession = ActionWrapper(parse.anyContent) { implicit req =>
+
+        Ok(views.html.index("Session cleaned")).withNewSession
+    }
 }

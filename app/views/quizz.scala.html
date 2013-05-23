@@ -1,9 +1,25 @@
-@(questionsIDs: List[Long])(implicit msgs: utils.Msgs)
+
+@(questionsIDs: String, currentQuestion: Long)(implicit msgs: utils.Msgs)
 
 @main("Quizz") {
-    <ul>
-        @for(id <- questionsIDs) {
-            <li>@id</li>
-        }
-    </ul>
+
+    <h2>Question <span>@(currentQuestion + 1)</span></h2>
+
+    <pre id="Question"></pre>
+
+    <ol id="Answers">
+
+    </ol>
+
+    <div class="btn-toolbar">
+        <button id="ConfirmButton" class="btn btn-success btn-large">Confirm</button>
+        <button id="NextButton" class="btn btn-large disabled" disabled="disabled">Next</button>
+    </div>
+
+    <script>
+        var currentQuestion = @currentQuestion;
+        var questionsIDs = new Array(@questionsIDs);
+    </script>
+
+    <script src="@routes.Assets.at("javascripts/quizz.js")"></script>
 }

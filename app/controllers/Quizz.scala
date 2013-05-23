@@ -3,6 +3,9 @@ package controllers
 import utils.ControllerWrapper
 import models.Question
 import scala.util.Random
+import play.api.libs.json.Json
+import play.api.data._
+import play.api.data.Forms._
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,16 +16,53 @@ import scala.util.Random
  */
 object Quizz extends ControllerWrapper {
 
+    val answerForm = Form(
+        tuple(
+            "id" -> longNumber,
+            "answers" -> text
+        )
+    )
+
     def beginQuizz() = ActionWrapper(parse.anyContent) { implicit req =>
+        val questionsIDs: String = Random.shuffle(Question.getAllIDs()).mkString(",")
+        val currentQuestion: Int = 0
 
-        val questionsIDs: List[Long] = req.session.get("questions").map({ ids =>
-            ids.toList.map(id => id.toLong)
-        }).getOrElse(Question.getAllIDs())
+        println("questionsIDs : " + questionsIDs)
 
-//        val questionsIDs: List[Long] = Question.getAllIDs()
+        Ok(views.html.quizz(questionsIDs, currentQuestion)).withSession(
+            "questions" -> questionsIDs
+        )
+    }
 
-        Ok(views.html.quizz(questionsIDs)).withSession(
-            "questions" -> questionsIDs.mkString(",")
+    def question(id: Long) = ActionWrapper(parse.anyContent) { implicit req =>
+        Question.findById(id).map({ q =>
+            Ok(q.toJson())
+        }).getOrElse(
+            NotFound("Question with id " + id + " not found")
+        )
+    }
+
+    def answerQuestion() = ActionWrapper(parse.anyContent) { implicit req =>
+        val params = answerForm.bindFromRequest().get
+        val id = params._1
+        val answers = params._2
+
+        if(id <= -1 || answers == null) BadRequest
+
+        Question.findById(id).map({ q =>
+            val ans1 = q.correctAnswers.split(",").distinct.sortBy(s => s)
+            val ans2 = answers.split(",").distinct.sortBy(s => s)
+
+            var test: Boolean = ans1.corresponds(ans2) {
+                (a, b) => a == b
+            }
+
+            if(test)
+                Ok(Json.obj("success" -> answers))
+            else
+                Ok(Json.obj("fail" -> q.correctAnswers))
+        }).getOrElse(
+            NotFound("Question with id " + id + " not found")
         )
     }
 }

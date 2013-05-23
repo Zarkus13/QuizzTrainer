@@ -54,6 +54,8 @@ trait StaticModel {
 object DB extends Schema {
     val questions = table[Question]("QUESTIONS")
     val answers = table[Answer]("ANSWERS")
-//    val emails = table[Email]("EMAILS")
-//    val skymemLinks = table[SkymemLink]("SKYMEM_LINKS")
+
+    // RELATIONS
+    val questionToAnswers = oneToManyRelation(questions, answers)
+        .via((q, a) => q.id === a.questionId)
 }

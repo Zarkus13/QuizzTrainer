@@ -1,0 +1,9 @@
+@(questionsIDs: List[Long])(implicit msgs: utils.Msgs)
+
+@main("Quizz") {
+    <ul>
+        @for(id <- questionsIDs) {
+            <li>@id</li>
+        }
+    </ul>
+}

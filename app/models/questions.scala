@@ -6,6 +6,8 @@ import org.squeryl.dsl.OneToMany
 import org.squeryl._
 import org.squeryl.PrimitiveTypeMode._
 import org.squeryl.annotations._
+import play.api.libs.json._
+import scala.util.Random
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,6 +24,25 @@ case class Question(
     def table: Table[Question] = questions
 
     lazy val answers: OneToMany[Answer] = questionToAnswers.left(this)
+
+    def writes(o: Model): JsValue = {
+        transaction {
+            Json.obj(
+                "id" -> id,
+                "text" -> text,
+                "correctAnswers" -> correctAnswers,
+                "answers" -> Json.arr(
+                    Random.shuffle(answers.toList).map { a =>
+                        a.toJson
+                    }
+                )
+            )
+        }
+    }
+
+    def toJson(): JsValue = {
+        this.writes(this)
+    }
 }
 
 object Question extends StaticModel {

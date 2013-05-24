@@ -1,0 +1,105 @@
+
+@font-face {
+    font-family: 'AGKFonts';
+    src: url('AGKFonts.eot');
+    src: url('AGKFonts.eot') format('embedded-opentype'),
+         url('AGKFonts.woff') format('woff'),
+         url('AGKFonts.ttf') format('truetype'),
+         url('AGKFonts.svg#AGKFonts') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: 'AGKFonts';
+	font-weight: normal;
+}
+
+.icon-home:before { content: '\0021'; }
+.icon-picture:before { content: '\0022'; }
+.icon-video:before { content: '\0023'; }
+.icon-camera:before { content: '\0024'; }
+.icon-micro:before { content: '\0025'; }
+.icon-folder:before { content: '\0026'; }
+.icon-folder-empty:before { content: '\0027'; }
+.icon-calendar:before { content: '\0028'; }
+
+.icon-parameters:before { content: '\0029'; }
+.icon-comment:before { content: '\002a'; }
+.icon-comments:before { content: '\002b'; }
+.icon-key:before { content: '\002c'; }
+.icon-star-empty:before { content: '\002d'; }
+.icon-star-half:before { content: '\002e'; }
+.icon-star-full:before { content: '\002f'; }
+.icon-heart-full:before { content: '\0030'; }
+
+.icon-heart-empty:before { content: '\0031'; }
+.icon-googleplus:before { content: '\0032'; }
+.icon-facebook:before { content: '\0033'; }
+.icon-twitter:before { content: '\0034'; }
+.icon-pinterest:before { content: '\0035'; }
+.icon-radio:before { content: '\0036'; }
+.icon-radio-checked:before { content: '\0037'; }
+.icon-delete:before { content: '\0038'; }
+
+.icon-circle:before { content: '\0039'; }
+.icon-arrow-down:before { content: '\003a'; }
+.icon-arrow-left:before { content: '\003b'; }
+.icon-arrow-up:before { content: '\003c'; }
+.icon-arrow-right:before { content: '\003d'; }
+.icon-search:before { content: '\003e'; }
+.icon-show:before { content: '\003f'; }
+.icon-edit:before { content: '\0040'; }
+
+.icon-reply:before { content: '\0041'; }
+.icon-contact:before { content: '\0042'; }
+.icon-quote:before { content: '\0043'; }
+.icon-folder2:before { content: '\0044'; }
+.icon-upload:before { content: '\0045'; }
+.icon-download:before { content: '\0046'; }
+.icon-share:before { content: '\0047'; }
+.icon-link:before { content: '\0048'; }
+
+.icon-load:before { content: '\0049'; }
+.icon-plus:before { content: '\004a'; }
+.icon-cancel:before { content: '\004b'; }
+.icon-minus:before { content: '\004c'; }
+.icon-valid:before { content: '\004d'; }
+.icon-code:before { content: '\004e'; }
+.icon-code2:before { content: '\004f'; }
+.icon-attachment:before { content: '\0050'; }
+
+.icon-gamepad:before { content: '\0051'; }
+.icon-oldgame:before { content: '\0052'; }
+.icon-question:before { content: '\0053'; }
+.icon-info:before { content: '\0054'; }
+.icon-warning:before { content: '\0055'; }
+.icon-list:before { content: '\0056'; }
+.icon-addlist:before { content: '\0057'; }
+.icon-rocket:before { content: '\0058'; }
+
+.icon-enlarge:before { content: '\0059'; }
+.icon-collapse:before { content: '\005a'; }
+.icon-vimeo:before { content: '\005b'; }
+.icon-rss:before { content: '\005c'; }
+.icon-googleplus-circle:before { content: '\005d'; }
+.icon-facebook-circle:before { content: '\005e'; }
+.icon-twitter-circle:before { content: '\005f'; }
+.icon-pinterest-circle:before { content: '\0060'; }
+
+.icon-question-circle:before { content: '\0061'; }
+.icon-info-circle:before { content: '\0062'; }
+.icon-warning-circle:before { content: '\0063'; }
+.icon-vimeo-circle:before { content: '\0064'; }
+.icon-rss-circle:before { content: '\0065'; }
+.icon-bookmark-empty:before { content: '\0066'; }
+.icon-bookmark-full:before { content: '\0067'; }
+.icon-copyright:before { content: '\0068'; }
+
+.icon-message:before { content: '\0069'; }
+.icon-post-trollnews2:before { content: '\006a'; }
+.icon-post-test:before { content: '\006b'; }
+.icon-post-news:before { content: '\006c'; }
+.icon-post-article:before { content: '\006d'; }
+.icon-post-trollnews:before { content: '\006e'; }
+.icon-profile:before { content: '\006f'; }

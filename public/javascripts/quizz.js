@@ -38,6 +38,7 @@ $(function() {
  */
 function nextQuestion() {
     currentQuestion++;
+    $('#Message').hide();
 
     getQuestion();
 }
@@ -87,14 +88,50 @@ function validateQuestion() {
         }
     }).done(
         function(json) {
-            if(json.success != undefined) {
+            var msg = "";
+            var addClass = "";
+            var rmClass = "";
+            var correctAnswers = null;
 
+            if(json.success != undefined) {
+                msg = "Correct !";
+                addClass = "alert-success";
+                rmClass = "alert-error";
+                correctAnswers = json.success.split(",");
             }
             else if(json.fail != undefined) {
-
+                msg = "Incorrect !";
+                addClass = "alert-error";
+                rmClass = "alert-success";
+                correctAnswers = json.fail.split(",");
             }
             else {
+                msg = "A problem happened !";
+                addClass = "alert-error";
+                rmClass = "alert-success";
+                correctAnswers = null;
+            }
 
+            $('#Message').html("<b>" + msg + "</b>");
+            $('#Message')
+                .addClass(addClass)
+                .removeClass(rmClass);
+
+            $('#Message').show();
+
+            if(correctAnswers != null) {
+                $('#Answers li').addClass('alert-error');
+                $('#Answers li').append('<span class="icon-cancel"></span>');
+
+                for(var k in correctAnswers) {
+                    $('#Answers li[letter="' + correctAnswers[k] + '"]')
+                        .addClass('alert-success')
+                        .removeClass('alert-error');
+
+                    $('#Answers li[letter="' + correctAnswers[k] + '"] .icon-cancel')
+                        .addClass('icon-valid')
+                        .removeClass('icon-cancel');
+                }
             }
         }
     )

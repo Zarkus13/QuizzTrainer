@@ -25,20 +25,61 @@ object Quizz extends ControllerWrapper {
 
     def beginQuizz() = ActionWrapper(parse.anyContent) { implicit req =>
         val questionsIDs: String = Random.shuffle(Question.getAllIDs()).mkString(",")
-        val currentQuestion: Int = 0
+        val currentQuestion: String = "0"
 
         println("questionsIDs : " + questionsIDs)
 
-        Ok(views.html.quizz(questionsIDs, currentQuestion)).withSession(
-            "questions" -> questionsIDs
+        Redirect(routes.Quizz.quizz()).withSession(
+            "questionsIDs" -> questionsIDs,
+            "currentQuestion" -> currentQuestion
+        )
+    }
+
+    def quizz() = ActionWrapper(parse.anyContent) { implicit req =>
+        val questionsIDs: String = req.session.get("questionsIDs").getOrElse(
+            Random.shuffle(Question.getAllIDs()).mkString(",")
+        )
+        val currentQuestion: String = req.session.get("currentQuestion").getOrElse("0")
+
+        println("quizz questionsID : " + questionsIDs)
+
+        Ok(views.html.quizz(questionsIDs, currentQuestion.toLong)).withSession(
+            "questionsIDs" -> questionsIDs,
+            "currentQuestion" -> String.valueOf(currentQuestion)
         )
     }
 
     def question(id: Long) = ActionWrapper(parse.anyContent) { implicit req =>
         Question.findById(id).map({ q =>
-            Ok(q.toJson())
+//            val currentQuestion: Int = req.session.get("currentQuestion").map({
+//                s => s.toInt
+//            }).getOrElse(0)
+
+            println("questionsIDs from session : " + req.session.get("questionsIDs").get)
+            val questionsIDs: Option[Array[Int]] = req.session.get("questionsIDs").map({ s =>
+                Some(s.split(",").map(i => i.toInt))
+            }).getOrElse(
+                None
+            )
+
+            println("questionsIDs : " + questionsIDs.get)
+            println("id question : " + id)
+
+            val currentQuestion: Int = questionsIDs match {
+                case None => 0
+                case ids: Some[Array[Int]] => {
+                    ids.get.indexOf(id)
+                }
+            }
+
+            println("currentQuestion : " + currentQuestion)
+
+            Ok(q.toJson()).withSession(
+                session +
+                ("currentQuestion" -> String.valueOf(currentQuestion))
+            )
         }).getOrElse(
-            NotFound("Question with id " + id + " not found")
+            NotFound("Question with id " + id + " not found").withSession(session)
         )
     }
 
@@ -58,11 +99,11 @@ object Quizz extends ControllerWrapper {
             }
 
             if(test)
-                Ok(Json.obj("success" -> answers))
+                Ok(Json.obj("success" -> answers)).withSession(session)
             else
-                Ok(Json.obj("fail" -> q.correctAnswers))
+                Ok(Json.obj("fail" -> q.correctAnswers)).withSession(session)
         }).getOrElse(
-            NotFound("Question with id " + id + " not found")
+            NotFound("Question with id " + id + " not found").withSession(session)
         )
     }
 }

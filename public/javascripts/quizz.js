@@ -41,6 +41,8 @@ function nextQuestion() {
     $('#Message').hide();
 
     getQuestion();
+
+    $('h2 span').text(currentQuestion + 1);
 }
 
 

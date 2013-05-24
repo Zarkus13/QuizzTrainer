@@ -5,7 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index
 GET     /discard-session            controllers.Application.discardSession
-GET     /quizz                      controllers.Quizz.beginQuizz
+GET     /begin-quizz                controllers.Quizz.beginQuizz
+GET     /quizz                      controllers.Quizz.quizz()
 GET     /question/$id<[0-9]+>       controllers.Quizz.question(id: Long)
 POST    /answer                     controllers.Quizz.answerQuestion
 

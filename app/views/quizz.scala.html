@@ -1,7 +1,12 @@
 
-@(questionsIDs: String, currentQuestion: Long)(implicit msgs: utils.Msgs)
+@(questionsIDs: String, currentQuestion: Int, nbPassed: Int, nbCorrect: Int)(implicit msgs: utils.Msgs)
 
 @main("Quizz") {
+
+    <div id="ScoreBar">
+        <div id="ScoreCorrect" style="width: @(if(nbPassed > 0) (nbCorrect * 100 / nbPassed) else 0)%;"></div>
+        <div id="ScoreFail" style="width: @(if(nbPassed > 0) (100 - (nbCorrect * 100 / nbPassed)) else 0)%;"></div>
+    </div>
 
     <h2>Question <span>@(currentQuestion + 1)</span></h2>
 
@@ -21,6 +26,8 @@
     <script>
         var currentQuestion = @currentQuestion;
         var questionsIDs = new Array(@questionsIDs);
+        var nbPassed = @nbPassed;
+        var nbCorrect = @nbCorrect;
     </script>
 
     <script src="@routes.Assets.at("javascripts/quizz.js")"></script>

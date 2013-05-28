@@ -1,0 +1,5 @@
+@(error: Option[FormError])
+
+@if(!error.isEmpty) {
+    <span class="text-error">@Messages(error.get.message)</span>
+}

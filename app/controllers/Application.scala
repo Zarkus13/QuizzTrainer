@@ -8,13 +8,17 @@ import org.squeryl.PrimitiveTypeMode._
 
 object Application extends ControllerWrapper {
 
-    def index = ActionWrapper(parse.anyContent) { implicit req =>
+    def index = SecuredAction {
+        ActionWrapper(parse.anyContent) { implicit req =>
 
-        Ok(views.html.index("Your new application is ready."))
+            Ok(views.html.index("Your new application is ready.")).withSession(session)
+        }
     }
 
-    def discardSession = ActionWrapper(parse.anyContent) { implicit req =>
+    def discardSession = SecuredAction {
+        ActionWrapper(parse.anyContent) { implicit req =>
 
-        Ok(views.html.index("Session cleaned")).withNewSession
+            Ok(views.html.index("Session cleaned")).withNewSession
+        }
     }
 }

@@ -1,6 +1,7 @@
 package utils
 
 import play.api.mvc._
+import controllers.{routes, Login}
 
 class ControllerWrapper extends Controller {
     implicit val msgs: Msgs = new Msgs
@@ -41,5 +42,17 @@ class ControllerWrapper extends Controller {
 
             func(req)
         }
+    }
+
+
+    // Permet de sécuriser une action en vérifiant
+    case class SecuredAction[A](action: Action[A]) extends Action[A] {
+        def apply(req: Request[A]): Result = {
+            req.session.get("username").map({ u =>
+                action(req)
+            }).getOrElse(Redirect(routes.Login.login()))
+        }
+
+        lazy val parser = action.parser
     }
 }

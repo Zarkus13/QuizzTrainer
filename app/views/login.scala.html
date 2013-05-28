@@ -1,0 +1,33 @@
+@(authForm: Form[(String, String)])(implicit flash: Flash, msgs: utils.Msgs)
+
+@import tags._
+
+@main("Please log in") {
+    <h2>Connexion :</h2>
+    @helper.form(
+        action = routes.Login.authentication,
+        'class -> "form-horizontal"
+    ) {
+        <div class="control-group">
+            <label for="Username" class="control-label">Identifiant :</label>
+            <div class="controls">
+                <input type="text" id="Username" name="@authForm("username").name" placeholder="Identifiant" />
+                @message(authForm.error("username"))
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label for="Password" class="control-label">Mot de passe :</label>
+            <div class="controls">
+                <input type="password" id="Password" name="@authForm("password").name" placeholder="Mot de passe" />
+                @message(authForm.error("password"))
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <input type="submit" value="Connexion" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+}

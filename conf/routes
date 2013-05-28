@@ -5,10 +5,17 @@
 # Home page
 GET     /                           controllers.Application.index
 GET     /discard-session            controllers.Application.discardSession
+
+# Authentication
+GET     /login                      controllers.Login.login
+POST    /login                      controllers.Login.authentication
+
+# Quizz
 GET     /begin-quizz                controllers.Quizz.beginQuizz
-GET     /quizz                      controllers.Quizz.quizz()
+GET     /quizz                      controllers.Quizz.quizz
 GET     /question/$id<[0-9]+>       controllers.Quizz.question(id: Long)
 POST    /answer                     controllers.Quizz.answerQuestion
+GET     /score                      controllers.Quizz.score
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -1,0 +1,7 @@
+@(score: Int)(implicit flash: Flash, msgs: utils.Msgs)
+
+@main("Résultat du quizz") {
+    <h2 id="Score">
+        Vous avez obtenu un score de <span class="@(if(score >= 50) "positive" else "negative")">@score %</span> !
+    </h2>
+}

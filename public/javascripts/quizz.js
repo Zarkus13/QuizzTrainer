@@ -37,12 +37,17 @@ $(function() {
  * Function switching to next question by incrementing currentQuestion and then calling getQuestion()
  */
 function nextQuestion() {
-    currentQuestion++;
-    $('#Message').hide();
+    if(currentQuestion >= questionsIDs.length - 1) {
+        window.location = "/quizz/score";
+    }
+    else {
+        currentQuestion++;
+        $('#Message').hide();
 
-    getQuestion();
+        getQuestion();
 
-    $('h2 span').text(currentQuestion + 1);
+        $('h2 span').text(currentQuestion + 1);
+    }
 }
 
 
@@ -79,6 +84,7 @@ function validateQuestion() {
         if(i > 0) answers += ","
 
         answers += $(this).attr("letter");
+        i++;
     });
 
     $.ajax({
@@ -86,7 +92,8 @@ function validateQuestion() {
         url: '/answer',
         data: {
             id: questionsIDs[currentQuestion],
-            answers: answers
+            answers: answers,
+            currentQuestion: currentQuestion
         }
     }).done(
         function(json) {
@@ -114,7 +121,7 @@ function validateQuestion() {
                 correctAnswers = null;
             }
 
-            $('#Message').html("<b>" + msg + "</b>");
+            $('#Message').html("<h3>" + msg + "</h3>");
             $('#Message')
                 .addClass(addClass)
                 .removeClass(rmClass);
@@ -135,6 +142,9 @@ function validateQuestion() {
                         .removeClass('icon-cancel');
                 }
             }
+
+            $('#ScoreCorrect').css('width', (json.nbCorrect * 100 / json.nbPassed) + "%");
+            $('#ScoreFail').css('width', (100 - (json.nbCorrect * 100 / json.nbPassed)) + "%");
         }
     )
 }

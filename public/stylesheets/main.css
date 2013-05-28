@@ -6,10 +6,34 @@ body > .container {
     padding-top: 20px;
 }
 
+.positive { color: #468847; }
+.negative { color: #b94a48; }
+
 .content { padding: 10px; }
 
 #Message { display: none; border: none; background: transparent; }
-#Question { font-size: 1.2em; }
+#Message h3 { margin: 0px; }
+
+#ScoreBar {
+    width: 100%;
+    height: 7px;
+    border: 1px solid rgba(0,0,0,0.15);
+    background-color: #F7F7F7;
+    position: relative;
+    border-radius: 5px;
+}
+#ScoreBar > div { height: 100%; position: absolute; top: 0px; border: none; border-radius: 5px; }
+#ScoreBar #ScoreCorrect { left: 0px; background-color: #468847; border-top-right-radius: 0px; border-bottom-right-radius: 0px; }
+#ScoreBar #ScoreFail { right: 0px; background-color: #b94a48; border-top-left-radius: 0px; border-bottom-left-radius: 0px; }
+
+#Question {
+    font-size: 1.2em;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -o-hyphens: auto;
+    hyphens: auto;
+}
 #Answers { padding-left: 25px; }
 #Answers li {
     list-style-position: inside;
@@ -19,13 +43,18 @@ body > .container {
     border-radius: 4px;
     cursor: pointer;
     position: relative;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -o-hyphens: auto;
+    hyphens: auto;
 }
 #Answers li:hover, #Answers li.selected { background-color: #F7F7F7; border: 1px solid rgba(0,0,0,0.15); }
 #Answers li.selected { background-color: #EEE; font-weight: bold; }
 #Answers li.alert-error { border-color: #eed3d7; background-color: #f2dede; }
 #Answers li.alert-success { border-color: #d6e9c6; background-color: #dff0d8; }
 
-#Answers li span {
+#Answers span {
     display: block;
     height: 20px;
     line-height: 20px;
@@ -36,3 +65,5 @@ body > .container {
 }
 
 .btn-toolbar { text-align: right; }
+
+#Score { text-align: center; }

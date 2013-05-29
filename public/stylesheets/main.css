@@ -28,11 +28,9 @@ body > .container {
 
 #Question {
     font-size: 1.2em;
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    -ms-hyphens: auto;
-    -o-hyphens: auto;
-    hyphens: auto;
+    word-break: normal;
+    word-wrap: normal;
+    text-align: justify;
 }
 #Answers { padding-left: 25px; }
 #Answers li {

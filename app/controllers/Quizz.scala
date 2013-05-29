@@ -147,7 +147,9 @@ object Quizz extends ControllerWrapper {
         ActionWrapper(parse.anyContent) { implicit req =>
             val nbPassed = req.session.get("nbPassed").map({ s => s.toInt }).getOrElse(0)
             val nbCorrect = req.session.get("nbCorrect").map({ s => s.toInt }).getOrElse(0)
-            val score = if(nbPassed == 0) (nbCorrect * 100 / nbPassed) else 0
+            val score = if(nbPassed != 0) (nbCorrect * 100 / nbPassed) else 0
+
+            println("nbPassed = " + nbPassed + " - nbCorrect = " + nbCorrect + " - score = " + score)
 
             Ok(views.html.score(score)).withSession(session)
         }
